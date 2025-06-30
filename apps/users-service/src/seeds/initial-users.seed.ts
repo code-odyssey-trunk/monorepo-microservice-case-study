@@ -1,11 +1,10 @@
-import { AppDataSource } from './data-source';
-import { User } from '@arbio/shared-core';
+import { DataSource } from 'typeorm';
+import { User } from '@arbio/shared-core/dist/entities/User.entity';
 
-async function seed() {
-  await AppDataSource.initialize();
+export async function runInitialUsersSeed(dataSource: DataSource) {
   console.log('Seeding database...');
 
-  const userRepository = AppDataSource.getRepository(User);
+  const userRepository = dataSource.getRepository(User);
 
   const users = [
     { name: 'Alice', email: 'alice@example.com' },
@@ -19,10 +18,4 @@ async function seed() {
   }
 
   console.log('Seeding complete!');
-  await AppDataSource.destroy();
 }
-
-seed().catch(error => {
-  console.error('Seeding failed:', error);
-  process.exit(1);
-});

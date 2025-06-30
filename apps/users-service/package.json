@@ -9,7 +9,7 @@
     "migration:generate": "pnpm typeorm migration:generate",
     "migration:run": "pnpm typeorm migration:run",
     "migration:show": "pnpm typeorm migration:show",
-    "seed": "ts-node src/seed.ts"
+    "seed": "ts-node src/seeds/seed.ts"
   },
   "dependencies": {
     "@arbio/shared-core": "workspace:^",
