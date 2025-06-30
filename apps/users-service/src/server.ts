@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { AppDataSource } from './data-source';
-import { CreateUserDto, User } from '@arbio/shared-core'; 
+import { CreateUserDto, User } from '@arbio/shared-core';
+import { toUserDto } from '@arbio/shared-core/dist/mappers/user.mapper';
 
 async function bootstrap() {
   await AppDataSource.initialize();
@@ -38,6 +39,20 @@ async function bootstrap() {
     } catch(error) {
       const message = error instanceof Error ? error.message : String(error);
       res.status(500).json({ message: 'Error fetching users', detail: message });
+    }
+  });
+
+  app.get('/users/:id', async (req: Request, res: Response): Promise<void> => {
+    try {
+      const user = await userRepository.findOneBy({ id: req.params.id });
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+      res.json(toUserDto(user));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      res.status(500).json({ message: 'Error fetching user', detail: message });
     }
   });
   
