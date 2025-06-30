@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { AppDataSource } from './data-source';
-import { CreateUserDto, User } from '@arbio/shared-core';
+import { CreateUserDto } from '@arbio/shared-core/dist/dtos/create-user.dto';
+import { User } from '@arbio/shared-core/dist/entities/User.entity';
 import { toUserDto } from '@arbio/shared-core/dist/mappers/user.mapper';
 
 async function bootstrap() {

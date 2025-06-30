@@ -1,6 +1,6 @@
 import express from 'express';
 import { AppDataSource } from './data-source';
-import { User } from '@arbio/shared-core';
+import { User } from '@arbio/shared-core/dist/entities/User.entity';
 
 async function bootstrap() {
   await AppDataSource.initialize();

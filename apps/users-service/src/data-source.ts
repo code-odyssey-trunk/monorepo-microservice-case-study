@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { User } from '@arbio/shared-core';  // Importing User entity from built shared-core
+import { User } from '@arbio/shared-core/dist/entities/User.entity';  // Importing User entity from built shared-core
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
