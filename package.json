@@ -1,0 +1,20 @@
+{
+  "name": "arbio-case-study",
+  "version": "1.0.0",
+  "description": "Microservices architecture case study for Arbio",
+  "main": "index.js",
+  "scripts": {
+    "clean": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && find . -name 'dist' -type d -prune -exec rm -rf '{}' + && rm -f pnpm-lock.yaml",
+    "build": "pnpm --filter @arbio/shared-core build",
+    "dev": "pnpm --filter @arbio/shared-core watch",
+    "migration:generate": "pnpm build && pnpm --filter users-service migration:generate",
+    "migration:run": "pnpm --filter users-service migration:run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

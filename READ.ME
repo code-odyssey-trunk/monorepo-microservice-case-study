@@ -1,0 +1,82 @@
+# Arbio Case Study: Microservice Architecture Prototype
+
+This project is a prototype demonstrating a scalable strategy for sharing TypeORM models between multiple services in a Node.js/TypeScript environment. It uses a **pnpm monorepo** and a **data ownership** model to create a realistic, maintainable microservice architecture.
+
+## Core Concepts
+
+- **Monorepo:** All services and shared libraries live in a single repository. `pnpm workspaces` manages dependencies efficiently.
+- **Shared Core Package:** The `@arbio/shared-core` package is the single source of truth for database entities and DTOs.
+- **Data Ownership:** The `users-service` is the "owner" of the `User` data. It is the only service that contains and runs migrations for the `users` table.
+- **Service Decoupling:** The `reporting-service` consumes the `User` model for type-safe reads but does not manage its schema, demonstrating loose coupling.
+
+## Project Structure
+
+```
+/
+|-- /apps
+|   |-- /users-service      # Manages user data (port 3000)
+|   |-- /reporting-service  # Reads user data for reports (port 3001)
+|-- /packages
+|   |-- /shared-core        # @arbio/shared-core package
+|-- docker-compose.yml      # MySQL database setup
+|-- package.json
+|-- pnpm-workspace.yaml
+```
+
+## How to Run
+
+### Prerequisites
+
+- Node.js (v18+)
+- pnpm (`npm install -g pnpm`)
+- Docker
+
+### 1. Start the Database
+
+From the project root, start the MySQL database using Docker.
+
+```bash
+docker-compose up -d
+```
+
+### 2. Install Dependencies
+
+Install all dependencies for the entire workspace from the project root.
+
+```bash
+pnpm install
+```
+
+### 3. Run Database Migrations & Seeding
+
+Run the setup scripts **from the context of the `users-service`**. This only needs to be done once.
+
+```bash
+pnpm --filter users-service migration:run
+pnpm --filter users-service seed
+```
+
+### 4. Start the Services
+
+Open two separate terminals. Use `pnpm --filter` to run scripts in a specific app from the root.
+
+**In Terminal 1 (for `users-service`):**
+
+```bash
+pnpm --filter users-service start
+```
+
+**In Terminal 2 (for `reporting-service`):**
+
+```bash
+pnpm --filter reporting-service start
+```
+
+### 5. Test the APIs
+
+- **Users Service (Port 3000):**
+  - `GET http://localhost:3000/users`
+  - `POST http://localhost:3000/users` Body: `{"name": "Charlie", "email": "charlie@example.com"}`
+
+- **Reporting Service (Port 3001):**
+  - `GET http://localhost:3001/user-report`

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json", // Inherit from the root config
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
+  "include": ["src/**/*", "../../packages/shared-core/src/**/*"]
+}

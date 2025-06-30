@@ -1,0 +1,46 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+
+# Dependency lock files (if you only use pnpm, you can ignore others)
+package-lock.json
+yarn.lock
+
+# Docker
+*.local
+docker-compose.override.yml
+
+# TypeORM migration logs (if any)
+ormconfig.js
+ormconfig.json
+
+# GitHub Actions cache
+.github/workflows/*.cache
+
+# Misc
+*.tgz

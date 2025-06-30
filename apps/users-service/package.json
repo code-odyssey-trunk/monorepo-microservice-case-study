@@ -1,0 +1,29 @@
+{
+  "name": "users-service",
+  "version": "1.0.0",
+  "description": "Manages user data, authentication, and profiles.",
+  "scripts": {
+    "start": "ts-node-dev src/server.ts",
+    "typeorm": "cross-env TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/data-source.ts",
+    "pre-migration:generate": "pnpm --filter @arbio/shared-core build",
+    "migration:generate": "pnpm typeorm migration:generate",
+    "migration:run": "pnpm typeorm migration:run",
+    "migration:show": "pnpm typeorm migration:show",
+    "seed": "ts-node src/seed.ts"
+  },
+  "dependencies": {
+    "@arbio/shared-core": "workspace:^",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.25"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
